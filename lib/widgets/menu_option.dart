@@ -1,7 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MenuOption extends StatelessWidget {
@@ -14,9 +11,7 @@ class MenuOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: kPrimaryColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
+          color: Color(0xFF083663), borderRadius: BorderRadius.circular(10)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -30,13 +25,14 @@ class MenuOption extends StatelessWidget {
           Text(
             title,
             style: GoogleFonts.openSans(
-              textStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+                textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600)),
           ),
+          // SizedBox(
+          //   height: 14,
+          // ),
         ],
       ),
     );

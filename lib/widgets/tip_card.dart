@@ -5,14 +5,7 @@ import 'package:heartmate_frontend/constants.dart';
 
 class TipCard extends StatelessWidget {
   final String tip;
-  final String tipNumber;
-  final height;
-  const TipCard({
-    Key? key, 
-    required this.tip,
-    required this.tipNumber,
-    this.height,
-    }) : super(key: key);
+  const TipCard({Key? key, required this.tip}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +13,7 @@ class TipCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.all(15),
-      height: size.height*height,
+      height: size.height*0.15,
       width: size.width*0.9,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -39,7 +32,7 @@ class TipCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  tipNumber,
+                  "Tip 1",
                   style: Theme.of(context).textTheme.subtitle2,
                 ),
                 Text(tip)

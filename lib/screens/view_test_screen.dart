@@ -5,8 +5,11 @@ import 'package:heartmate_frontend/constants.dart';
 import 'package:heartmate_frontend/screens/display_test_screen.dart';
 
 class ViewTest extends StatelessWidget {
-  final List testList;
-  const ViewTest({Key? key, required this.testList}) : super(key: key);
+  final List testList; 
+  const ViewTest({
+    Key? key,
+    required this.testList
+    }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +83,7 @@ class ViewTest extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return DisplayTest(test: test);
+                        return DisplayTest(test: test,);
                       }),
                     );
                   },

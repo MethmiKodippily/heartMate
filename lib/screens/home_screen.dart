@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:heartmate_frontend/widgets/menu_option.dart';
 import 'package:heartmate_frontend/screens/test_input_screen.dart';
@@ -14,15 +13,17 @@ import 'dart:convert';
 class Menu extends StatelessWidget {
   final String userName;
   final int userId;
-  const Menu({Key? key, required this.userName, required this.userId})
-      : super(key: key);
+  const Menu({
+    Key? key, 
+    required this.userName,
+    required this.userId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF9FA8DA),
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Color(0xFF083663),
         elevation: 0,
         actions: <Widget>[
           Padding(
@@ -58,12 +59,10 @@ class Menu extends StatelessWidget {
                     Text(
                       "Hi " + userName,
                       style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                          textStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold)),
                     ),
                     SizedBox(
                       height: 4,
@@ -71,12 +70,10 @@ class Menu extends StatelessWidget {
                     Text(
                       "Menu",
                       style: GoogleFonts.openSans(
-                        textStyle: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+                          textStyle: TextStyle(
+                              color: Color(0xFF083663),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700)),
                     ),
                   ],
                 ),
@@ -107,54 +104,45 @@ class Menu extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return TestInput(
-                          userId: userId,
-                        );
+                        return TestInput(userId: userId,);
                       }),
                     );
                   },
                   child: MenuOption(
-                    title: "Take a Test",
-                    img: "assets/icons/test.png",
-                  ),
+                      title: "Take a Test", img: "assets/icons/test.png"),
                 ),
                 InkWell(
                   onTap: () async {
-                    final url = 'https://heart-mate.herokuapp.com//viewtest';
+                    final url = 'http://10.0.2.2:5000//viewtest';
 
-                    final response = await http.post(Uri.parse(url),
-                        body: json.encode({"userId": userId}));
-
-                    var decoded = json.decode(response.body);
+                    final response = await http.post(
+                            Uri.parse(url),
+                            body: json.encode(
+                              {"userId": userId}));
+                              
+                      var decoded = json.decode(response.body);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return ViewTest(
-                          testList: decoded["result"],
-                        );
+                        return ViewTest(testList: decoded["result"],);
                       }),
                     );
                   },
                   child: MenuOption(
-                    title: "View Previous Tests",
-                    img: "assets/icons/view.png",
-                  ),
+                      title: "View Previous Tests",
+                      img: "assets/icons/view.png"),
                 ),
                 InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
-                        return SearchTest(
-                          userId: userId,
-                        );
+                        return SearchTest(userId: userId,);
                       }),
                     );
                   },
                   child: MenuOption(
-                    title: "Search Test",
-                    img: "assets/icons/search.png",
-                  ),
+                      title: "Search Test", img: "assets/icons/search.png"),
                 ),
                 InkWell(
                   onTap: () {
@@ -166,9 +154,8 @@ class Menu extends StatelessWidget {
                     // );
                   },
                   child: MenuOption(
-                    title: "View Statistical Report",
-                    img: "assets/icons/statistics.png",
-                  ),
+                      title: "View Statistical Report",
+                      img: "assets/icons/statistics.png"),
                 ),
               ],
             ),

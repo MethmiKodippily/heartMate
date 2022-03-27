@@ -5,12 +5,16 @@ import 'package:heartmate_frontend/screens/prediction_result_screen.dart';
 import 'package:heartmate_frontend/widgets/negative_card.dart';
 import 'package:heartmate_frontend/widgets/postive_card.dart';
 import 'package:heartmate_frontend/constants.dart';
+import 'package:heartmate_frontend/api.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class TestInput extends StatefulWidget {
   final int userId;
-  const TestInput({Key? key, required this.userId}) : super(key: key);
+  const TestInput({
+    Key? key,
+    required this.userId
+    }) : super(key: key);
 
   @override
   State<TestInput> createState() => _TestInputState(userId);
@@ -27,9 +31,10 @@ class _TestInputState extends State<TestInput> {
   late int _diabetes; // 1 diabetes 0 not diabetes
   late double _totChol; // 90 to 700
   late double _bmi;
-  int _userId;
+  int _userId ;
 
   _TestInputState(this._userId); // above 10 digits 2
+  
 
   @override
   void initState() {
@@ -95,14 +100,13 @@ class _TestInputState extends State<TestInput> {
           height: 30,
         ),
         Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            'Select Gender',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-        ),
+            alignment: Alignment.topLeft,
+            child: Text(
+              'Select Gender',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            )),
         SizedBox(
           height: 20,
         ),
@@ -114,7 +118,7 @@ class _TestInputState extends State<TestInput> {
               onChanged: (val) {
                 set_gender(1);
               },
-              activeColor: kPrimaryColor,
+              activeColor: Color(0xFF083663),
             ),
             Text('Male'),
             SizedBox(
@@ -126,7 +130,7 @@ class _TestInputState extends State<TestInput> {
               onChanged: (val) {
                 set_gender(0);
               },
-              activeColor: kPrimaryColor,
+              activeColor: Color(0xFF083663),
             ),
             Text('Female'),
           ],
@@ -188,14 +192,13 @@ class _TestInputState extends State<TestInput> {
           height: 20,
         ),
         Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            'Are you taking blood preassure medicine',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-        ),
+            alignment: Alignment.topLeft,
+            child: Text(
+              'Are you taking blood preassure medicine',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            )),
         SizedBox(
           height: 20,
         ),
@@ -207,7 +210,7 @@ class _TestInputState extends State<TestInput> {
               onChanged: (val) {
                 set_bpMeds(1);
               },
-              activeColor: kPrimaryColor,
+              activeColor: Color(0xFF083663),
             ),
             Text('Yes'),
             SizedBox(
@@ -219,11 +222,11 @@ class _TestInputState extends State<TestInput> {
               onChanged: (val) {
                 set_bpMeds(0);
               },
-              activeColor: kPrimaryColor,
+              activeColor: Color(0xFF083663),
             ),
             Text('No'),
           ],
-        ),
+        )
       ],
     );
   }
@@ -235,14 +238,13 @@ class _TestInputState extends State<TestInput> {
           height: 20,
         ),
         Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            'Have you been diagnosed with hypertension',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-        ),
+            alignment: Alignment.topLeft,
+            child: Text(
+              'Have you been diagnosed with hypertension',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            )),
         SizedBox(
           height: 20,
         ),
@@ -254,7 +256,7 @@ class _TestInputState extends State<TestInput> {
               onChanged: (val) {
                 set_prevelantHyp(1);
               },
-              activeColor: kPrimaryColor,
+              activeColor: Color(0xFF083663),
             ),
             Text('Yes'),
             SizedBox(
@@ -266,11 +268,11 @@ class _TestInputState extends State<TestInput> {
               onChanged: (val) {
                 set_prevelantHyp(0);
               },
-              activeColor: kPrimaryColor,
+              activeColor: Color(0xFF083663),
             ),
             Text('No'),
           ],
-        ),
+        )
       ],
     );
   }
@@ -306,14 +308,13 @@ class _TestInputState extends State<TestInput> {
           height: 20,
         ),
         Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            'Have you been diagnosed with diabetes',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-        ),
+            alignment: Alignment.topLeft,
+            child: Text(
+              'Have you been diagnosed with diabetes',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            )),
         SizedBox(
           height: 20,
         ),
@@ -325,7 +326,7 @@ class _TestInputState extends State<TestInput> {
               onChanged: (val) {
                 set_diabetes(1);
               },
-              activeColor: kPrimaryColor,
+              activeColor: Color(0xFF083663),
             ),
             Text('Yes'),
             SizedBox(
@@ -337,11 +338,11 @@ class _TestInputState extends State<TestInput> {
               onChanged: (val) {
                 set_diabetes(0);
               },
-              activeColor: kPrimaryColor,
+              activeColor: Color(0xFF083663),
             ),
             Text('No'),
           ],
-        ),
+        )
       ],
     );
   }
@@ -395,7 +396,7 @@ class _TestInputState extends State<TestInput> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Color(0xFF083663),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -443,6 +444,7 @@ class _TestInputState extends State<TestInput> {
                   height: 20,
                 ),
                 _buildBMI(),
+
                 _buildGender(),
                 Container(
                   padding: EdgeInsets.all(1),
@@ -498,17 +500,17 @@ class _TestInputState extends State<TestInput> {
 
                       var now = DateTime.now();
 
-                      print(now.year); // 1989
-                      print(now.month); // 11
-                      print(now.day); // 9
+                    print(now.year); // 1989
+                    print(now.month); // 11
+                    print(now.day); // 9
 
-                      var date = now.year.toString() +
-                          "/" +
-                          now.month.toString() +
-                          "/" +
-                          now.day.toString();
+                    var date = now.year.toString() +
+                        "/" +
+                        now.month.toString() +
+                        "/" +
+                        now.day.toString();
 
-                      final url = 'https://heart-mate.herokuapp.com//prediction';
+                      final url = 'http://10.0.2.2:5000//prediction';
 
                       var dict = {};
                       //
@@ -525,35 +527,32 @@ class _TestInputState extends State<TestInput> {
                       dict["bpMeds"] = _bpMeds;
                       dict["bmi"] = _bmi;
 
-                      final response = await http.post(Uri.parse(url),
-                          body: json.encode({"userInfo": dict}));
-
+                      final response = await http.post(
+                            Uri.parse(url),
+                            body: json.encode(
+                              {"userInfo": dict}));
+                              
                       var decoded = json.decode(response.body);
                       Widget resultCard;
-                      if (decoded["result"] == 'Positive') {
+                      if(decoded["result"] == 'Positive'){
                         resultCard = PositiveCard();
-                      } else {
+                      }else{
                         resultCard = NegativeCard();
                       }
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              (Prediction(resultCard: resultCard)),
-                        ),
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => (
+                                  Prediction(
+                                      resultCard: resultCard,))
+                          )
                       );
                     },
                     color: Color(0xFF083663),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Text(
-                      "Submit",
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Text("Submit",
+                        style: TextStyle(fontSize: 16, color: Colors.white)),
                   ),
                 ),
               ],

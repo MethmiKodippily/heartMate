@@ -9,7 +9,10 @@ import 'dart:convert';
 
 class SearchTest extends StatefulWidget {
   final int userId;
-  const SearchTest({Key? key, required this.userId}) : super(key: key);
+  const SearchTest({
+    Key? key,
+    required this.userId
+    }) : super(key: key);
 
   @override
   State<SearchTest> createState() => _SearchTestState(userId);
@@ -28,14 +31,14 @@ class _SearchTestState extends State<SearchTest> {
   List? dateList;
   String? _myDate;
 
-  String Url = 'https://heart-mate.herokuapp.com/dates?userId=';
+  String Url = 'http://10.0.2.2:5000/dates?userId=';
   Future<String?> _getDateList() async {
     var data = await fetchdata(Url + userId.toString());
     var decoded = json.decode(data);
 
     setState(() {
       dateList = decoded["result"];
-
+      
       print(dateList);
     });
   }
@@ -127,12 +130,14 @@ class _SearchTestState extends State<SearchTest> {
                     confirm(context);
                   } else {
                     print(_myDate);
-                    final url = 'https://heart-mate.herokuapp.com//searchtest';
+                    final url = 'http://10.0.2.2:5000//searchtest';
 
-                    final response = await http.post(Uri.parse(url),
-                        body: json.encode({"testId": _myDate}));
-
-                    var decoded = json.decode(response.body);
+                    final response = await http.post(
+                            Uri.parse(url),
+                            body: json.encode(
+                              {"testId": _myDate}));
+                              
+                      var decoded = json.decode(response.body);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
@@ -143,15 +148,9 @@ class _SearchTestState extends State<SearchTest> {
                 },
                 color: kPrimaryColor,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Text(
-                  "Submit",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(30)),
+                child: Text("Submit",
+                    style: TextStyle(fontSize: 16, color: Colors.white)),
               ),
             ),
           ],
@@ -167,20 +166,18 @@ class _SearchTestState extends State<SearchTest> {
       // ignore: prefer_const_literals_to_create_immutables
       actions: <Widget>[
         FlatButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(
-            "Ok",
-          ),
-        )
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              "Ok",
+            ))
       ],
     );
 
     showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return alertDialog;
-      },
-    );
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return alertDialog;
+        });
   }
 }

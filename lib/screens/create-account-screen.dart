@@ -74,10 +74,9 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                         height: size.width * 0.1,
                         width: size.width * 0.1,
                         decoration: BoxDecoration(
-                          color: kBlue,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: kWhite, width: 2),
-                        ),
+                            color: kBlue,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: kWhite, width: 2)),
                         child: Icon(
                           FontAwesomeIcons.plus,
                           color: kWhite,
@@ -108,8 +107,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                                 border: InputBorder.none,
                                 prefixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0,
-                                  ),
+                                      horizontal: 20.0),
                                   child: Icon(
                                     FontAwesomeIcons.user,
                                     size: 28,
@@ -149,8 +147,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                                 border: InputBorder.none,
                                 prefixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0,
-                                  ),
+                                      horizontal: 20.0),
                                   child: Icon(
                                     FontAwesomeIcons.user,
                                     size: 28,
@@ -190,8 +187,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                                 border: InputBorder.none,
                                 prefixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0,
-                                  ),
+                                      horizontal: 20.0),
                                   child: Icon(
                                     FontAwesomeIcons.envelope,
                                     size: 28,
@@ -237,8 +233,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                                 border: InputBorder.none,
                                 prefixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0,
-                                  ),
+                                      horizontal: 20.0),
                                   child: Icon(
                                     FontAwesomeIcons.lock,
                                     size: 28,
@@ -281,8 +276,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                                 border: InputBorder.none,
                                 prefixIcon: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0,
-                                  ),
+                                      horizontal: 20.0),
                                   child: Icon(
                                     FontAwesomeIcons.lock,
                                     size: 28,
@@ -318,18 +312,17 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                         height: size.height * 0.08,
                         width: size.width * 0.8,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: kBlue,
-                        ),
+                            borderRadius: BorderRadius.circular(16),
+                            color: kBlue),
                         child: TextButton(
-                          onPressed: () async {
+                          onPressed: () async{
                             if (!_formKey.currentState!.validate()) {
                               return;
                             }
 
                             _formKey.currentState!.save();
 
-                            final url = 'https://heart-mate.herokuapp.com//signup';
+                            final url = 'http://10.0.2.2:5000//signup';
 
                             Map userInfo = {};
                             userInfo["email"] = _email;
@@ -337,16 +330,19 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                             userInfo["firstName"] = _firstName;
                             userInfo["lastName"] = _lastName;
 
-                            final response = await http.post(Uri.parse(url),
-                                body: json.encode({"userInfo": userInfo}));
-
+                            final response = await http.post(
+                              Uri.parse(url),
+                              body: json.encode(
+                                {"userInfo": userInfo}));
+                                
                             var decoded = json.decode(response.body);
 
                             if (decoded["result"] == "success") {
+
                               Navigator.pop(context);
-                            } else {
-                              confirm(context);
-                            }
+
+                          }else{confirm(context);}
+                            
                           },
                           child: Text(
                             'Create Account',
@@ -368,7 +364,6 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
       ],
     );
   }
-
   void confirm(BuildContext context) {
     var alertDialog = AlertDialog(
       title: Text("ERROR!"),
@@ -376,20 +371,17 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
       // ignore: prefer_const_literals_to_create_immutables
       actions: <Widget>[
         FlatButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(
-            "Ok",
-          ),
-        )
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              "Ok",
+            ))
       ],
     );
-
     showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return alertDialog;
-      },
-    );
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return alertDialog;
+        });
   }
 }
