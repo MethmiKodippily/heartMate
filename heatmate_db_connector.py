@@ -1,4 +1,5 @@
 import mysql.connector
+from datetime import date
 
 HOST = "us-cdbr-east-05.cleardb.net"
 PORT = "3306"
@@ -19,7 +20,7 @@ def login_val(userinfo):
 
         print("connection started")
 
-        query = "SELECT password, fName, id FROM usertable WHERE email ='%s'" % userinfo['email']
+        query = "SELECT password, fName, id, dob, gender FROM usertable WHERE email ='%s'" % userinfo['email']
 
         cursor.execute(query)
 
@@ -34,14 +35,24 @@ def login_val(userinfo):
                 result["result"] = "success"
                 result["name"] = user_data[0][1]
                 result["id"] = user_data[0][2]
+                dob = user_data[0][3]
+                dob = dob.split("-")
+                today = date.today()
+                result["age"] = today.year - int(dob[0]) - ((today.month, today.day) < (int(dob[1]), int(dob[2])))
+                result["gender"] = user_data[0][4]
+
             else:
                 result["result"] = "unsuccessful"
                 result["name"] = ""
                 result["id"] = ""
+                result["age"] = ""
+                result["gender"] = ""
         else:
             result["result"] = "unsuccessful"
             result["name"] = ""
             result["id"] = ""
+            result["age"] = ""
+            result["gender"] = ""
 
         return result
 
@@ -71,9 +82,9 @@ def signup_val(userinfo):
 
         print("connection started")
 
-        query = "INSERT INTO usertable (fName, sName, email, password) VALUES (%s, %s, %s, %s)"
+        query = "INSERT INTO usertable (fName, sName, email, password, dob, gender) VALUES (%s, %s, %s, %s, %s, %s)"
 
-        tuple = (userinfo["firstName"], userinfo["lastName"], userinfo["email"], userinfo["password"])
+        tuple = (userinfo["firstName"], userinfo["lastName"], userinfo["email"], userinfo["password"], userinfo["dob"], userinfo["gender"])
 
         cursor.execute(query, tuple)
         mydb.commit()
