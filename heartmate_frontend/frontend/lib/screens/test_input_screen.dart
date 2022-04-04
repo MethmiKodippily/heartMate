@@ -10,15 +10,17 @@ import 'dart:convert';
 
 class TestInput extends StatefulWidget {
   final int userId;
-  const TestInput({Key? key, required this.userId}) : super(key: key);
+  final int age;
+  final int gender;
+  const TestInput({Key? key, required this.userId, required this.age, required this.gender}) : super(key: key);
 
-  @override
-  State<TestInput> createState() => _TestInputState(userId);
+  @override      
+  State<TestInput> createState() => _TestInputState(userId, age, gender);
 }
 
 class _TestInputState extends State<TestInput> {
-  late int _age; //above 10
-  late int _gender;
+  int _age; //above 10
+  int _gender;
   late double _sysBP; //min = 50 and max 250
   late double _diaBP; //min = 30 and max 150
   late int _bpMeds; //
@@ -29,21 +31,14 @@ class _TestInputState extends State<TestInput> {
   late double _bmi;
   int _userId;
 
-  _TestInputState(this._userId); // above 10 digits 2
+  _TestInputState(this._userId, this._age, this._gender); // above 10 digits 2
 
   @override
   void initState() {
-    set_gender(1);
     set_bpMeds(1);
     set_prevelantHyp(1);
     set_diabetes(1);
     super.initState();
-  }
-
-  set_gender(int val) {
-    setState(() {
-      _gender = val;
-    });
   }
 
   set_bpMeds(int val) {
@@ -65,75 +60,6 @@ class _TestInputState extends State<TestInput> {
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  Widget _buildAge() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Age'),
-      keyboardType: TextInputType.number,
-      maxLength: 2,
-      validator: (value) {
-        int? age = int.tryParse(value!);
-
-        if (age == null) {
-          return 'Age cannot be empty';
-        } else if (age < 10) {
-          return 'Age cannot be less than 20';
-        }
-
-        return null;
-      },
-      onSaved: (value) {
-        _age = int.tryParse(value!)!;
-      },
-    );
-  }
-
-  Widget _buildGender() {
-    return Column(
-      children: <Widget>[
-        SizedBox(
-          height: 30,
-        ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            'Select Gender',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Row(
-          children: <Widget>[
-            Radio(
-              value: 1,
-              groupValue: _gender,
-              onChanged: (val) {
-                set_gender(1);
-              },
-              activeColor: kPrimaryColor,
-            ),
-            Text('Male'),
-            SizedBox(
-              width: 30,
-            ),
-            Radio(
-              value: 0,
-              groupValue: _gender,
-              onChanged: (val) {
-                set_gender(0);
-              },
-              activeColor: kPrimaryColor,
-            ),
-            Text('Female'),
-          ],
-        )
-      ],
-    );
-  }
 
   Widget _buildSysBP() {
     return TextFormField(
@@ -425,7 +351,6 @@ class _TestInputState extends State<TestInput> {
                     style: TextStyle(fontWeight: FontWeight.w800, fontSize: 25),
                   ),
                 ),
-                _buildAge(),
                 _buildSysBP(),
                 SizedBox(
                   height: 20,
@@ -443,11 +368,10 @@ class _TestInputState extends State<TestInput> {
                   height: 20,
                 ),
                 _buildBMI(),
-                _buildGender(),
-                Container(
-                  padding: EdgeInsets.all(1),
-                  color: Colors.grey,
-                ),
+                // Container(
+                //   padding: EdgeInsets.all(1),
+                //   color: Colors.grey,
+                // ),
                 SizedBox(
                   height: 20,
                 ),
@@ -496,22 +420,26 @@ class _TestInputState extends State<TestInput> {
                       print(_totChol);
                       print(_bmi);
 
+                      //Getting the current date and time
                       var now = DateTime.now();
 
-                      print(now.year); // 1989
-                      print(now.month); // 11
-                      print(now.day); // 9
+                      print(now.year); 
+                      print(now.month); 
+                      print(now.day); 
 
+                      //Storing the date in the foramt yyyy/mm/dd 
                       var date = now.year.toString() +
-                          "/" +
+                          "-" +
                           now.month.toString() +
-                          "/" +
+                          "-" +
                           now.day.toString();
 
+                      //API route
                       final url = 'https://heart-mate.herokuapp.com//prediction';
 
+                      //Storing user data in a dictionary
                       var dict = {};
-                      //
+                      
                       dict["userId"] = _userId;
                       dict["date"] = date;
                       dict["age"] = _age;
@@ -525,11 +453,14 @@ class _TestInputState extends State<TestInput> {
                       dict["bpMeds"] = _bpMeds;
                       dict["bmi"] = _bmi;
 
+                      //Passing the user data dictionary to the api and getting the response 
                       final response = await http.post(Uri.parse(url),
                           body: json.encode({"userInfo": dict}));
 
+                      //Decoding the response
                       var decoded = json.decode(response.body);
                       Widget resultCard;
+                      //Checking if the result is positive or negative and get the relevent result card
                       if (decoded["result"] == 'Positive') {
                         resultCard = PositiveCard();
                       } else {
