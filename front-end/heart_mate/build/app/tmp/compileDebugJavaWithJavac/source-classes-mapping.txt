@@ -1,4 +1,0 @@
-io/flutter/plugins/GeneratedPluginRegistrant.java
- io.flutter.plugins.GeneratedPluginRegistrant
-com/example/heart_mate/BuildConfig.java
- com.example.heart_mate.BuildConfig
