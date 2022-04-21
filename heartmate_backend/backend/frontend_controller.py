@@ -11,6 +11,14 @@ def about_heartmate():
     print("Hello HeartMate")
     return "Hello HeartMate"
 
+@app.route('/signup', methods=['POST'])
+def signup():
+    signup = request.data
+    signup = json.loads(signup.decode('utf-8'))
+
+    result = conn.signup_val(signup['userInfo'])
+    return result
+
 @app.route('/prediction', methods=['POST'])
 def return_prediction():
     #dictionary to store the prediction result
@@ -43,6 +51,14 @@ def return_prediction():
     #storing the prediction result in the dictionary
     d['result'] = result
     return d
+
+@app.route('/viewtest', methods=['POST'])
+def return_tests():
+    userId = request.data
+    userId = json.loads(userId.decode('utf-8'))
+
+    result = conn.fetch_tests(userId['userId'])
+    return result
 
 if __name__ == "__main__":
     app.run()
