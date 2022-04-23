@@ -11,6 +11,14 @@ def about_heartmate():
     print("Hello HeartMate")
     return "Hello HeartMate"
 
+@app.route('/login', methods=['POST'])
+def login():
+    login = request.data
+    login = json.loads(login.decode('utf-8'))
+
+    result = conn.login_val(login['userInfo'])
+    return result
+
 @app.route('/signup', methods=['POST'])
 def signup():
     signup = request.data
@@ -58,6 +66,22 @@ def return_tests():
     userId = json.loads(userId.decode('utf-8'))
 
     result = conn.fetch_tests(userId['userId'])
+    return result
+
+@app.route('/dates', methods=['GET'])
+def return_dates():
+    userId = int(request.args['userId'])
+    print(userId)
+    result = conn.fetch_date(userId)
+    print(result)
+    return result
+
+@app.route('/searchtest', methods=['POST'])
+def return_searchedtest():
+    testId = request.data
+    testId = json.loads(testId.decode('utf-8'))
+
+    result = conn.search_test(testId['testId'])
     return result
 
 if __name__ == "__main__":
