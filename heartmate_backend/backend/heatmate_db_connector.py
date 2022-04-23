@@ -7,6 +7,68 @@ USER = "b5435f31808b2a"
 PASSWORD = "e8968ff1"
 DATABASE = "heroku_a073b44a07ad5e4"
 
+def login_val(userinfo):
+    try:
+        mydb = mysql.connector.connect(
+            host=HOST,
+            port=PORT,
+            user=USER,
+            password=PASSWORD,
+            database=DATABASE
+        )
+        cursor = mydb.cursor()
+
+        print("connection started")
+
+        query = "SELECT password, fName, id, dob, gender FROM usertable WHERE email ='%s'" % userinfo['email']
+
+        cursor.execute(query)
+
+        user_data = cursor.fetchall()
+        print(user_data)
+
+        result = {}
+
+        if len(user_data) != 0:
+            password = user_data[0][0]
+            if password == userinfo['password']:
+                result["result"] = "success"
+                result["name"] = user_data[0][1]
+                result["id"] = user_data[0][2]
+                dob = user_data[0][3]
+                dob = dob.split("-")
+                today = date.today()
+                result["age"] = today.year - int(dob[0]) - ((today.month, today.day) < (int(dob[1]), int(dob[2])))
+                result["gender"] = user_data[0][4]
+
+            else:
+                result["result"] = "unsuccessful"
+                result["name"] = ""
+                result["id"] = ""
+                result["age"] = ""
+                result["gender"] = ""
+        else:
+            result["result"] = "unsuccessful"
+            result["name"] = ""
+            result["id"] = ""
+            result["age"] = ""
+            result["gender"] = ""
+
+        return result
+
+    except mysql.connector.Error as error:
+
+        print(f"ERROR- {error}")
+
+        return 0
+
+    finally:
+
+        if mydb.is_connected():
+            cursor.close()
+            mydb.close()
+            print("MySQL connection is closed")
+
 def signup_val(userinfo):
     try:
         mydb = mysql.connector.connect(            host=HOST,
@@ -180,4 +242,121 @@ def fetch_tests(userId):
         if mydb.is_connected():
             cursor.close()
             mydb.close()
-            print("MySQL connection is closed")            
+            print("MySQL connection is closed")
+
+def fetch_date(userId):
+    try:
+        mydb = mysql.connector.connect(
+            host=HOST,
+            port=PORT,
+            user=USER,
+            password=PASSWORD,
+            database=DATABASE
+        )
+        cursor = mydb.cursor()
+
+        print("connection started")
+
+        query = "SELECT testId,testDate FROM tests WHERE id ='%s'" % userId
+
+        cursor.execute(query)
+
+        user_data = cursor.fetchall()
+        print(user_data)
+
+        dates = []
+
+        for i in user_data:
+            test = {}
+            test['date'] = i[1]
+            test['testId'] = i[0]
+            dates.append(test)
+
+        return {"result" : dates}
+
+    except mysql.connector.Error as error:
+
+        print(f"ERROR- {error}")
+
+        return 0
+
+    finally:
+
+        if mydb.is_connected():
+            cursor.close()
+            mydb.close()
+            print("MySQL connection is closed")
+
+def search_test(testId):
+    try:
+        mydb = mysql.connector.connect(
+            host=HOST,
+            port=PORT,
+            user=USER,
+            password=PASSWORD,
+            database=DATABASE
+        )
+
+        cursor = mydb.cursor()
+
+        print("connection started")
+
+        query = "SELECT * FROM tests WHERE testId ='%s'" % int(testId)
+
+        cursor.execute(query)
+
+        i = cursor.fetchall()
+
+        test = {}
+
+        test["date"] = i[0][2]
+
+        test["age"] = i[0][3]
+
+        test["sysBP"] = i[0][4]
+
+        if i[0][5] == "1":
+            test["prevelantHyp"] = "Yes"
+        else:
+            test["prevelantHyp"] = "No"
+
+        test["diaBP"] = i[0][6]
+
+        test["glucose"] = i[0][7]
+
+        if i[0][8] == "1":
+            test["gender"] = "Male"
+        else:
+            test["gender"] = "Female"
+
+        if i[0][9] == "1":
+            test["diabetes"] = "Yes"
+        else:
+            test["diabetes"] = "No"
+
+        test["totChol"] = i[0][10]
+
+        if i[0][11] == "1":
+            test["bpMeds"] = "Yes"
+        else:
+            test["bpMeds"] = "No"
+
+        test["bmi"] = i[0][12]
+
+        test["result"] = i[0][13]
+
+        return {"result" : test}
+
+
+    except mysql.connector.Error as error:
+
+        print(f"ERROR- {error}")
+
+        return 0
+
+    finally:
+
+        if mydb.is_connected():
+            cursor.close()
+            mydb.close()
+            print("MySQL connection is closed")
