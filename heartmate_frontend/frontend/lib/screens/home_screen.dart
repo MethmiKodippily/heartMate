@@ -14,7 +14,9 @@ import 'dart:convert';
 class Menu extends StatelessWidget {
   final String userName;
   final int userId;
-  const Menu({Key? key, required this.userName, required this.userId})
+  final int age;
+  final int gender;
+  const Menu({Key? key, required this.userName, required this.userId, required this.age, required this.gender})
       : super(key: key);
 
   @override
@@ -108,7 +110,9 @@ class Menu extends StatelessWidget {
                       context,
                       MaterialPageRoute(builder: (context) {
                         return TestInput(
-                          userId: userId,
+                          userId: userId, 
+                          age: age, 
+                          gender: gender,
                         );
                       }),
                     );
