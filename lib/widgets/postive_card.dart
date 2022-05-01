@@ -1,5 +1,7 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/constants.dart';
+import 'package:frontend/constants.dart';
 
 class PositiveCard extends StatelessWidget {
   const PositiveCard({Key? key}) : super(key: key);
@@ -11,9 +13,8 @@ class PositiveCard extends StatelessWidget {
       width: size.width * 0.8,
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-        color: kPrimaryColor
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          color: kPrimaryColor),
       margin: EdgeInsets.all(25),
       child: Text(
         'Alert!'

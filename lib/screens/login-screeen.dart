@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/constants.dart';
+import 'package:frontend/constants.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:heartmate_frontend/screens/home_screen.dart';
-import 'package:heartmate_frontend/screens/create-account-screen.dart';
+import 'package:frontend/screens/home_screen.dart';
+import 'package:frontend/screens/create-account-screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -46,9 +46,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(
                     'HeartMate',
                     style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 60,
-                        fontWeight: FontWeight.bold),
+                      color: Colors.white,
+                      fontSize: 60,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
@@ -59,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   // crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
                       child: Container(
                         height: size.height * 0.08,
                         width: size.width * 0.8,
@@ -72,8 +73,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               prefixIcon: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20.0,
+                                ),
                                 child: Icon(
                                   FontAwesomeIcons.envelope,
                                   size: 28,
@@ -119,7 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               border: InputBorder.none,
                               prefixIcon: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0),
+                                  horizontal: 20.0,
+                                ),
                                 child: Icon(
                                   FontAwesomeIcons.lock,
                                   size: 28,
@@ -162,17 +165,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           _formKey.currentState!.save();
 
-                          final url = 'http://10.0.2.2:5000//login';
+                          final url = 'https://heart-mate.herokuapp.com//login';
 
                           Map userInfo = {};
                           userInfo["email"] = _email;
                           userInfo["password"] = _password;
 
-                          final response = await http.post(
-                            Uri.parse(url),
-                            body: json.encode(
-                              {"userInfo": userInfo}));
-                              
+                          final response = await http.post(Uri.parse(url),
+                              body: json.encode({"userInfo": userInfo}));
+
                           var decoded = json.decode(response.body);
 
                           if (decoded["result"] == "success") {
@@ -180,11 +181,16 @@ class _LoginScreenState extends State<LoginScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => Menu(
-                                  userName: decoded['name'], userId: decoded['id'],),
+                                  userName: decoded['name'],
+                                  userId: decoded['id'],
+                                  age: decoded['age'], 
+                                  gender: decoded['gender'],
+                                ),
                               ),
                             );
-                          }else{confirm(context);}
-
+                          } else {
+                            confirm(context);
+                          }
                         },
                         child: Text(
                           'Log In',
@@ -231,24 +237,28 @@ class _LoginScreenState extends State<LoginScreen> {
       ],
     );
   }
-   void confirm(BuildContext context) {
+
+  void confirm(BuildContext context) {
     var alertDialog = AlertDialog(
       title: Text("ERROR!"),
       content: Text("Inocorrect email or passwaord."),
       // ignore: prefer_const_literals_to_create_immutables
       actions: <Widget>[
         FlatButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              "Ok",
-            ))
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(
+            "Ok",
+          ),
+        )
       ],
     );
+
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return alertDialog;
-        });
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return alertDialog;
+      },
+    );
   }
 }

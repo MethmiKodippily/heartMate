@@ -1,18 +1,15 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new
 
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/constants.dart';
-import 'package:heartmate_frontend/screens/display_test_screen.dart';
-import 'package:heartmate_frontend/api.dart';
+import 'package:frontend/constants.dart';
+import 'package:frontend/screens/display_test_screen.dart';
+import 'package:frontend/api.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class SearchTest extends StatefulWidget {
   final int userId;
-  const SearchTest({
-    Key? key,
-    required this.userId
-    }) : super(key: key);
+  const SearchTest({Key? key, required this.userId}) : super(key: key);
 
   @override
   State<SearchTest> createState() => _SearchTestState(userId);
@@ -31,14 +28,14 @@ class _SearchTestState extends State<SearchTest> {
   List? dateList;
   String? _myDate;
 
-  String Url = 'http://10.0.2.2:5000/dates?userId=';
+  String Url = 'https://heart-mate.herokuapp.com/dates?userId=';
   Future<String?> _getDateList() async {
     var data = await fetchdata(Url + userId.toString());
     var decoded = json.decode(data);
 
     setState(() {
       dateList = decoded["result"];
-      
+
       print(dateList);
     });
   }
@@ -130,14 +127,12 @@ class _SearchTestState extends State<SearchTest> {
                     confirm(context);
                   } else {
                     print(_myDate);
-                    final url = 'http://10.0.2.2:5000//searchtest';
+                    final url = 'https://heart-mate.herokuapp.com//searchtest';
 
-                    final response = await http.post(
-                            Uri.parse(url),
-                            body: json.encode(
-                              {"testId": _myDate}));
-                              
-                      var decoded = json.decode(response.body);
+                    final response = await http.post(Uri.parse(url),
+                        body: json.encode({"testId": _myDate}));
+
+                    var decoded = json.decode(response.body);
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) {
@@ -148,9 +143,15 @@ class _SearchTestState extends State<SearchTest> {
                 },
                 color: kPrimaryColor,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-                child: Text("Submit",
-                    style: TextStyle(fontSize: 16, color: Colors.white)),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Text(
+                  "Submit",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ],
@@ -166,18 +167,20 @@ class _SearchTestState extends State<SearchTest> {
       // ignore: prefer_const_literals_to_create_immutables
       actions: <Widget>[
         FlatButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              "Ok",
-            ))
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(
+            "Ok",
+          ),
+        )
       ],
     );
 
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return alertDialog;
-        });
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return alertDialog;
+      },
+    );
   }
 }
