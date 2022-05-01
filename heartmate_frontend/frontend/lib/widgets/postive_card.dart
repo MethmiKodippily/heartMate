@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/constants.dart';
+import 'package:frontend/constants.dart';
 
 class PositiveCard extends StatelessWidget {
   const PositiveCard({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_new
 
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/constants.dart';
-import 'package:heartmate_frontend/screens/display_test_screen.dart';
-import 'package:heartmate_frontend/api.dart';
+import 'package:frontend/constants.dart';
+import 'package:frontend/screens/display_test_screen.dart';
+import 'package:frontend/api.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

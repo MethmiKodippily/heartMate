@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, unused_element, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/screens/prediction_result_screen.dart';
-import 'package:heartmate_frontend/widgets/negative_card.dart';
-import 'package:heartmate_frontend/widgets/postive_card.dart';
-import 'package:heartmate_frontend/constants.dart';
+import 'package:frontend/screens/prediction_result_screen.dart';
+import 'package:frontend/widgets/negative_card.dart';
+import 'package:frontend/widgets/postive_card.dart';
+import 'package:frontend/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

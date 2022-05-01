@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/constants.dart';
+import 'package:frontend/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MenuOption extends StatelessWidget {

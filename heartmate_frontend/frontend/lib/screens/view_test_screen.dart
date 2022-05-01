@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/constants.dart';
-import 'package:heartmate_frontend/screens/display_test_screen.dart';
+import 'package:frontend/constants.dart';
+import 'package:frontend/screens/display_test_screen.dart';
 
 class ViewTest extends StatelessWidget {
   final List testList;
