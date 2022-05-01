@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'constants.dart';
-import 'package:heartmate_frontend/screens/login-screeen.dart';
+import 'package:frontend/screens/login-screeen.dart';
 
 void main() {
   runApp(MyApp());

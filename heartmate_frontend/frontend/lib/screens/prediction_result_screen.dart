@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/constants.dart';
-import 'package:heartmate_frontend/widgets/tip_card.dart';
-import 'package:heartmate_frontend/widgets/postive_card.dart';
-import 'package:heartmate_frontend/widgets/negative_card.dart';
+import 'package:frontend/constants.dart';
+import 'package:frontend/widgets/tip_card.dart';
+import 'package:frontend/widgets/postive_card.dart';
+import 'package:frontend/widgets/negative_card.dart';
 
 class Prediction extends StatelessWidget {
   final Widget resultCard;

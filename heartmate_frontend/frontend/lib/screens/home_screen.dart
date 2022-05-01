@@ -1,13 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:heartmate_frontend/constants.dart';
+import 'package:frontend/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:heartmate_frontend/widgets/menu_option.dart';
-import 'package:heartmate_frontend/screens/test_input_screen.dart';
-import 'package:heartmate_frontend/screens/view_test_screen.dart';
-import 'package:heartmate_frontend/screens/search_test_screen.dart';
-import 'package:heartmate_frontend/screens/login-screeen.dart';
+import 'package:frontend/widgets/menu_option.dart';
+import 'package:frontend/screens/test_input_screen.dart';
+import 'package:frontend/screens/view_test_screen.dart';
+import 'package:frontend/screens/search_test_screen.dart';
+import 'package:frontend/screens/login-screeen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
